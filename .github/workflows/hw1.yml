@@ -24,7 +24,7 @@ jobs:
       - run: clang-tidy hw1_lib/*.c hw1_lib/*.h main.c -warnings-as-errors=* -extra-arg=-std=c99 -- -I hw1_lib/
   test:
     runs-on: ubuntu-latest
-    needs: [check]
+    needs: [static]
     steps:
     - uses: actions/checkout@v2 
     - run: sudo apt-get update -y
