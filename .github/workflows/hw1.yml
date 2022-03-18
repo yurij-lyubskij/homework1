@@ -32,8 +32,5 @@ jobs:
     - run: ls
     - run: cat CMakeLists.txt
     - run: sudo cmake .
-    - run: make
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        path: main.out
+    - run: sudo make
+    - run: ./tests/test_hw1
