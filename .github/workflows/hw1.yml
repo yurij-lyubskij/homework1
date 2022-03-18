@@ -27,10 +27,13 @@ jobs:
     needs: [check]
     steps:
     - uses: actions/checkout@v2 
+    - run: sudo apt-get update -y
     - run: sudo snap install cmake --classic
     - run: mkdir build
+    - run: ls
+    - run: cat CMakelists.txt
     - run: cd build
-    - run: cmake ..
+    - run: sudo cmake ../
     - run: make
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
