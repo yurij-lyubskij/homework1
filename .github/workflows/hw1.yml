@@ -28,7 +28,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2 
     - run: sudo apt-get update -y
-    - run: sudo snap install cmake --classic
+    - run: sudo apt install cmake
     - run: ls
     - run: cat CMakeLists.txt
     - run: sudo cmake .
