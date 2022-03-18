@@ -27,7 +27,7 @@ jobs:
     needs: [check]
     steps:
     - uses: actions/checkout@v2 
-    - run: sudo snap install cmake
+    - run: sudo snap install cmake --classic -y
     - run: mkdir build && cd build
     - run: cmake ..
     - run: make
