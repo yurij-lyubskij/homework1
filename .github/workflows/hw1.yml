@@ -28,10 +28,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2 
     - run: sudo snap install cmake --classic
-    - run: ls
+    - run: mkdir build
+    - run: cd build
     - run: cmake ..
     - run: make
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-        path: main.out
+        path: main.out- run: mkdir build
