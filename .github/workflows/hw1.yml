@@ -28,7 +28,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2 
     - run: sudo snap install cmake --classic
-    - run: mkdir build && cd build
+    - run: ls
     - run: cmake ..
     - run: make
     - name: Upload artifacts
