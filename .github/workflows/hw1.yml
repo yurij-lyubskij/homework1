@@ -27,7 +27,7 @@ jobs:
     needs: [check]
     steps:
     - uses: actions/checkout@v2 
-    - run: sudo snap install cmake --classic -y
+    - run: sudo snap install cmake --classic
     - run: mkdir build && cd build
     - run: cmake ..
     - run: make
@@ -35,9 +35,3 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         path: main.out
-  test:
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - uses: actions/checkout@v2 
-      - run: ./main.out
