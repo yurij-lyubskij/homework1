@@ -15,22 +15,23 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  check:
+  static:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 
       - run: sudo apt-get update -y
       - run: sudo apt-get install -y clang-tidy
       - run: clang-tidy hw1_lib/*.c hw1_lib/*.h main.c -warnings-as-errors=* -extra-arg=-std=c99 -- -I hw1_lib/
-  build:
+  test:
     runs-on: ubuntu-latest
     needs: [check]
     steps:
     - uses: actions/checkout@v2 
     - run: sudo apt-get update -y
-    - run: sudo apt install cmake gcc libgtest-dev
+    - run: sudo apt install cmake gcc libgtest-dev valgrind
     - run: ls
     - run: cat CMakeLists.txt
     - run: sudo cmake .
     - run: sudo make
     - run: ./tests/test_hw1
+    - run: valgrind --tool=memcheck --leak-check=yes --error-exitcode=1 ./tests/test_hw1
