@@ -34,8 +34,10 @@ jobs:
     - uses: actions/checkout@v2 
     - run: sudo apt-get update -y
     - run: sudo apt install cmake gcc libgtest-dev valgrind lcov
+    - run: sudo apt-get install -y clang-tools
     - run: sudo cmake .
     - run: sudo make
+    - run: sudo scan-build make
     - run: valgrind --tool=memcheck --leak-check=yes --error-exitcode=1 ./tests/test_hw1
     - run: sudo ./tests/test_hw1
     - run: lcov -t "./tests/test_hw1" -o coverage.info -c -d "./hw1_lib/CMakeFiles/hw1_lib.dir/" && genhtml -o report coverage.info
