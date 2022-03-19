@@ -1,33 +1,33 @@
 #include "utils.h"
 #include "general.h"
 
-//Общий Буфер
-Station *stations_buff = NULL; // Буфер.
-int stations_capacity = 0;     // Размер буфера.
-int stations_size = 0; // Количество элементов в массиве.
+// Общий Буфер
+Station *stations_buff = NULL;  // Буфер.
+int stations_capacity = 0;  // Размер буфера.
+int stations_size = 0;  // Количество элементов в массиве.
 
 // Буфер всех электричек, проходящих через обе станции
-cell *trains_all = NULL; // Буфер.
-int all_capacity = 0;    // Размер буфера.
-int all_size = 0; // Количество элементов в массиве.
+cell *trains_all = NULL;  // Буфер.
+int all_capacity = 0;  // Размер буфера.
+int all_size = 0;  // Количество элементов в массиве.
 
 // Буфер электричек, проходящих через обе станции после текущего времени
-cell *trains_later = NULL; // Буфер.
-int later_capacity = 0;    // Размер буфера.
-int later_size = 0; // Количество элементов в массиве.
+cell *trains_later = NULL;  // Буфер.
+int later_capacity = 0;  // Размер буфера.
+int later_size = 0;  // Количество элементов в массиве.
 
 void initialize() {
   stations_buff = NULL;  // Буфер.
-  stations_capacity = 0; // Размер буфера.
-  stations_size = 0; // Количество элементов в массиве.
+  stations_capacity = 0;  // Размер буфера.
+  stations_size = 0;  // Количество элементов в массиве.
 
-  trains_all = NULL; // Буфер.
+  trains_all = NULL;  // Буфер.
   all_capacity = 0;  // Размер буфера.
-  all_size = 0; // Количество элементов в массиве.
+  all_size = 0;  // Количество элементов в массиве.
 
-  trains_later = NULL; // Буфер.
+  trains_later = NULL;  // Буфер.
   later_capacity = 0;  // Размер буфера.
-  later_size = 0; // Количество элементов в массиве.
+  later_size = 0;  // Количество элементов в массиве.
 }
 
 void cellSetter(void **buffer, int pos, void *element) {
@@ -65,8 +65,9 @@ int compare_time(const time_24 *el1, const time_24 *el2) {
 }
 
 int compare_by_time(const void *arr, const void *element, int number) {
-  return compare_time(&((cell *)arr)[number].departTime,
-                      &((cell *)element)->departTime);
+    time_24 t1 = ((cell *)arr + number)->departTime;
+    time_24 t2 = ((cell *)element)->departTime;
+  return compare_time(&t1, &t2);
 }
 
 int add_train(cell **trains_buff, int *trains_capacity, int *trains_size,
@@ -105,7 +106,7 @@ int add_station(Station new_station, cell new_train) {
       (void **)&stations_buff, &stations_capacity, &stations_size, &new_station,
       sizeof(Station), &compare_stations, &station_setter, &station_getter);
   int after = stations_size;
-  if (after == before) { //станция уже была
+  if (after == before) {  // станция уже была
     free(new_station.Name);
   }
   Station *station = (stations_buff + pos);
@@ -126,19 +127,19 @@ cell find_train(char *src, char *dest, time_24 *time_now) {
   int pos_src = find_insertion_point(stations_buff, stations_size - 1, &temp,
                                      compare_stations);
   if (pos_src < 0 || pos_src >= stations_size) {
-    return retval; // station does not exist
+    return retval;  // station does not exist
   }
   if (compare_stations(stations_buff, &temp, pos_src) != 0) {
-    return retval; // station does not exist
+    return retval;  // station does not exist
   }
   temp.Name = dest;
   int pos_dest = find_insertion_point(stations_buff, stations_size, &temp,
                                       compare_stations);
   if (pos_dest < 0 || pos_dest >= stations_size) {
-    return retval; // station does not exist
+    return retval;  // station does not exist
   }
   if (compare_stations(stations_buff, &temp, pos_dest) != 0) {
-    return retval; // station does not exist
+    return retval;  // station does not exist
   }
   cell *src_buff = stations_buff[pos_src].allTrains;
   cell *dst_buff = stations_buff[pos_dest].allTrains;

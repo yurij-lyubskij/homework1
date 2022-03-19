@@ -12,7 +12,7 @@ int one_station(FILE *fin, FILE *fout, int station_number, int train_number) {
   station.allTrains = NULL;
   fprintf(fout, "Введите название станции (не более 49 символов)\n");
   int args_read = fscanf(fin, "%49s", name);
-  //предусмотреть вычитку буфера? до \n
+  // предусмотреть вычитку буфера? до \n
   if (args_read != 1) {
     return 1;
   }
@@ -20,10 +20,10 @@ int one_station(FILE *fin, FILE *fout, int station_number, int train_number) {
   strncpy(station.Name, name, strlen(name) + 1);
 
   train.arrivTime.hour = -1;
-  train.arrivTime.min = -1; //для станции отправления
+  train.arrivTime.min = -1;  // для станции отправления
 
   char end_flag = 0;
-  if (train.station_number != 0) { //не станция отправления
+  if (train.station_number != 0) {  // sне станция отправления
     fprintf(fout, "Введите время прибытия в формате чч:мм\n");
     args_read =
         fscanf(fin, "%d :%d", &(train.arrivTime.hour), &(train.arrivTime.min));

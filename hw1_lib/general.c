@@ -9,7 +9,7 @@ int find_insertion_point(const void *arr, int size, const void *element,
     return 0;
   }
   int first = 0;
-  int last = size; // Элемент в last не учитывается.
+  int last = size;  // Элемент в last не учитывается.
   while (first < last) {
     int mid = (first + last) / 2;
     if (compare(arr, element, mid) < 0) {
@@ -56,7 +56,7 @@ int add_if_not_exists(void **buffer, int *capacity, int *size, void *element,
       return pos;
     }
     memmove(getter(buffer, pos + 1), getter(buffer, pos),
-            ((*size) - pos) * element_size); //проверку возвр знач добавить
+            ((*size) - pos) * element_size);  // проверку возвр знач добавить
   }
   setter(buffer, pos, element);
   (*size)++;
