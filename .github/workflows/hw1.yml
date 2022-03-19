@@ -28,7 +28,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2 
     - run: sudo apt-get update -y
-    - run: sudo apt install cmake gcc libgtest-dev valgrind gcov lcov
+    - run: sudo apt install cmake gcc libgtest-dev valgrind lcov
     - run: sudo cmake .
     - run: sudo make
     - run: valgrind --tool=memcheck --leak-check=yes --error-exitcode=1 ./tests/test_hw1
