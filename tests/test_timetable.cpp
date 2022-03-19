@@ -77,10 +77,12 @@ EXPECT_EQ(0, compare_trains((const void*)trains, (const void*)trains, 0));
 free_all();
 }
 
-TEST(timetable, test_more_comparation) {
+TEST(timetable, test_more_comparation){
+initialize();
 cell tr[2] = {0};
-tr[0].train_number = 1;
-EXPECT_EQ(0, compare_trains((const void*)tr, (const void*)tr, 0));
+tr[0].train_number = -1;
+tr[2].train_number = 1;
+EXPECT_EQ(1, compare_trains((const void*)tr, (const void*)tr, 1));
 free_all();
 }
 
