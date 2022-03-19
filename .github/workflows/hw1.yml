@@ -33,7 +33,7 @@ jobs:
     - run: sudo make
     - run: ./tests/test_hw1
     - run: valgrind --tool=memcheck --leak-check=yes --error-exitcode=1 ./tests/test_hw1
-    - run: ls
+    - run: ls && cd hw1_lib/ && ls
     - run: sudo lcov -t "./tests/" -o coverage.info -c -d hw1_lib/  && genhtml -o report coverage.info
     - name: upload artifact
       uses: actions/upload-artifact@v2
