@@ -7,7 +7,7 @@ extern "C" {
 
 #define MAX_LEN 3000
 
-TEST(timetable, TestBasics) {
+TEST(time_table, add_station) {
     initialize();
     Station new_station = {nullptr};
     cell new_train = {0};
@@ -15,7 +15,7 @@ TEST(timetable, TestBasics) {
     free_all();
 }
 
-TEST(timetable, TestFull) {
+TEST(timetable, test_full) {
     char input[MAX_LEN] = "Марьино\n11:40\nАндреевка\n12:20\ny\ny\nМарьино\nАндреевка\n11:10\n";
     char output[MAX_LEN];
     char etalon[MAX_LEN] = \
@@ -43,6 +43,31 @@ TEST(timetable, TestFull) {
     fclose(outstream);
     free_all();
     EXPECT_STRCASEEQ(output, etalon);
+}
+
+TEST(timetable, test_big) {
+char input[MAX_LEN] = "Марьино\n11:40\nАндреевка\n12:20\ny\nn\n\
+Марьино\n11:10\nАндреевка\n11:30\nn\n11:40\nБалашиха\n11:50\nn\n12:10\n\
+Никольское\n12:30\ny\ny\nМарьино\nАндреевка\n11:00\n";
+char output[MAX_LEN];
+char etalon[MAX_LEN] = "\
+Ищем поезд\n\
+Введите название станции отправления (не более 49 символов)\n\
+Введите название станции прибытия (не более 49 символов)\n\
+Введите текущее время в формате чч:мм\n\
+Следующий поезд отправится в 11 часов, 10 минут\n";
+
+FILE *instream = fmemopen(input, MAX_LEN, "r");
+FILE *outstream = fmemopen(output, MAX_LEN, "w");
+initialize();
+all_trains(instream, outstream);
+fclose(outstream);
+outstream = fmemopen(output, MAX_LEN, "w");
+find_nearest(instream, outstream);
+fclose(instream);
+fclose(outstream);
+free_all();
+EXPECT_STRCASEEQ(output, etalon);
 }
 
 
