@@ -28,7 +28,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2 
     - run: sudo apt-get update -y
-    - run: sudo apt install cmake gcc libgtest-dev valgrind
+    - run: sudo apt install cmake gcc libgtest-dev valgrind lcov
     - run: ls
     - run: cat CMakeLists.txt
     - run: sudo cmake .
