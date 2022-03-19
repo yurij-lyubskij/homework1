@@ -40,6 +40,8 @@ jobs:
     - run: sudo apt-get install -y clang-tools
     - run: sudo cmake .
     - run: sudo scan-build make
+    - run: rm Makefile
+    - run: sudo cmake .
     - run: sudo make
     - run: valgrind --tool=memcheck --leak-check=yes --error-exitcode=1 ./tests/test_hw1
     - run: sudo ./tests/test_hw1
