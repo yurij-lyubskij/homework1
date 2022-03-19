@@ -46,6 +46,7 @@ TEST(timetable, test_full) {
 }
 
 TEST(timetable, test_big) {
+initialize();
 char input[MAX_LEN] = "Марьино\n11:40\nАндреевка\n12:20\ny\nn\n\
 Марьино\n11:10\nАндреевка\n11:30\nn\n11:40\nБалашиха\n11:50\nn\n12:10\n\
 Никольское\n12:30\ny\ny\nМарьино\nАндреевка\n11:00\n";
@@ -59,7 +60,6 @@ char etalon[MAX_LEN] = "\
 
 FILE *instream = fmemopen(input, MAX_LEN, "r");
 FILE *outstream = fmemopen(output, MAX_LEN, "w");
-initialize();
 all_trains(instream, outstream);
 fclose(outstream);
 outstream = fmemopen(output, MAX_LEN, "w");
@@ -68,6 +68,20 @@ fclose(instream);
 fclose(outstream);
 free_all();
 EXPECT_STRCASEEQ(output, etalon);
+}
+
+TEST(timetable, test_compare_trains) {
+initialize();
+cell trains[2] = {0};
+EXPECT_EQ(0, compare_trains((const void*)trains, (const void*)trains, 0));
+free_all();
+}
+
+TEST(timetable, test_more_comparation) {
+cell tr[2] = {0};
+tr[0].train_number = 1;
+EXPECT_EQ(0, compare_trains((const void*)tr, (const void*)tr, 0));
+free_all();
 }
 
 
